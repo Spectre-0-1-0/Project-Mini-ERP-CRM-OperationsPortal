@@ -8,6 +8,8 @@ import { ChallansPage } from '../features/challans/ChallansPage';
 import { AppShell } from '../components/layout/AppShell';
 import { ProtectedRoute } from './ProtectedRoute';
 
+import { NotFoundPage } from '../features/error/NotFoundPage';
+
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -59,8 +61,8 @@ export const AppRoutes: React.FC = () => {
         }
       />
 
-      {/* Fallback Redirect */}
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      {/* Custom 404 Page */}
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
