@@ -101,4 +101,18 @@ describe('Products & Stock Module API Tests', () => {
     expect(Array.isArray(res.body.data.movements)).toBe(true);
     expect(res.body.data.movements.length).toBeGreaterThan(0);
   });
+
+  it('POST /api/v1/products/:id/stock-movements - SALES role attempt returns 403 Forbidden', async () => {
+    const res = await request(app)
+      .post(`/api/v1/products/${createdProductId}/stock-movements`)
+      .set('Authorization', `Bearer ${salesToken}`)
+      .send({
+        quantity: 10,
+        type: 'IN',
+        reason: 'Sales role unauthorized movement',
+      });
+
+    expect(res.status).toBe(403);
+    expect(res.body.success).toBe(false);
+  });
 });

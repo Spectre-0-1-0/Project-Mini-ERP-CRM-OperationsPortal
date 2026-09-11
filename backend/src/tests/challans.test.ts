@@ -5,12 +5,13 @@ import { app } from '../app.js';
 describe('Sales Challan Module & Concurrency Tests', () => {
   let salesToken: string;
   let warehouseToken: string;
+  let accountsToken: string;
   let customerId: string;
   let productId: string;
   let challanId: string;
 
   beforeAll(async () => {
-    // Login as Sales and Warehouse
+    // Login as Sales, Warehouse, and Accounts
     const salesLogin = await request(app)
       .post('/api/v1/auth/login')
       .send({ email: 'sales@ops.com', password: 'Password123!' });
@@ -20,6 +21,11 @@ describe('Sales Challan Module & Concurrency Tests', () => {
       .post('/api/v1/auth/login')
       .send({ email: 'warehouse@ops.com', password: 'Password123!' });
     warehouseToken = warehouseLogin.body.data.token;
+
+    const accountsLogin = await request(app)
+      .post('/api/v1/auth/login')
+      .send({ email: 'accounts@ops.com', password: 'Password123!' });
+    accountsToken = accountsLogin.body.data.token;
 
     // Create test customer
     const custRes = await request(app)
@@ -163,5 +169,14 @@ describe('Sales Challan Module & Concurrency Tests', () => {
       .get(`/api/v1/products/${lowStockProdId}`)
       .set('Authorization', `Bearer ${salesToken}`);
     expect(checkProdRes.body.data.product.currentStock).toBe(0);
+  });
+
+  it('POST /api/v1/challans/:id/confirm - ACCOUNTS role confirm attempt returns 403 Forbidden', async () => {
+    const res = await request(app)
+      .post(`/api/v1/challans/${challanId}/confirm`)
+      .set('Authorization', `Bearer ${accountsToken}`);
+
+    expect(res.status).toBe(403);
+    expect(res.body.success).toBe(false);
   });
 });

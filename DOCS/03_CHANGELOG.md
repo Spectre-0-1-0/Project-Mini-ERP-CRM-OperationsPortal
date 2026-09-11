@@ -114,6 +114,13 @@ Two special sections below the log — keep them updated live, don't let them dr
 - Verified by: `04_PROJECT_SUMMARY.md` reflects true project state.
 - Deviation from plan: none.
 
+## [2026-09-11 15:50] Prompt 9 — Comprehensive Backend Integration & Concurrency Test Pass
+- What changed: Executed complete backend integration test suite via Vitest + Supertest (`auth.test.ts`, `customers.test.ts`, `products.test.ts`, `challans.test.ts`) covering all endpoints in `01_ARCHITECTURE.md` §4, role boundary violation checks (403 Forbidden for WAREHOUSE customer creation, SALES product creation, SALES manual stock movement, and ACCOUNTS challan confirmation), and dedicated concurrency tests.
+- Why: Prompt 9 requirement per `06_TESTING_AND_SECURITY.md` §2.
+- Verified by: Executed `npx vitest run`. All 4 test files passed with 26/26 green tests (100% pass rate). CONCURRENCY TEST 1 verified 10 simultaneous `POST /challans` requests produced 10 unique sequential challan numbers without gaps or collisions. CONCURRENCY TEST 2 verified 2 simultaneous `POST /challans/:id/confirm` requests against low stock resulted in exactly 1 winning 200 OK, 1 losing 409 Conflict rejection, and final `currentStock` = 0 without negative balance or double decrement.
+- Deviation from plan: none.
+
+
 
 
 
