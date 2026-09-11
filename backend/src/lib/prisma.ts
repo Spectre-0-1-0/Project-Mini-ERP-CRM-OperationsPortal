@@ -330,7 +330,8 @@ const createPrismaClient = () => {
   if (
     env.DATABASE_URL &&
     env.DATABASE_URL.startsWith('postgres') &&
-    !env.DATABASE_URL.includes('placeholder')
+    !env.DATABASE_URL.includes('placeholder') &&
+    !env.DATABASE_URL.includes('[YOUR-PASSWORD]')
   ) {
     try {
       const pool = new pg.Pool({ connectionString: env.DATABASE_URL });

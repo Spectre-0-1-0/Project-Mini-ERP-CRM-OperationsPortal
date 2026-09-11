@@ -12,6 +12,14 @@ const envSchema = z.object({
   PORT: z.string().transform((val) => parseInt(val, 10)).default('5000'),
   CORS_ORIGIN: z.string().default('http://localhost:5173'),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+
+  // Supabase Platform Credentials
+  SUPABASE_URL: z.string().optional(),
+  SUPABASE_PUBLISHABLE_KEY: z.string().optional(),
+  SUPABASE_SECRET_KEY: z.string().optional(),
+  SUPABASE_ANON_KEY: z.string().optional(),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().optional(),
+  SUPABASE_JWKS_URL: z.string().optional(),
 });
 
 const parseEnv = () => {
