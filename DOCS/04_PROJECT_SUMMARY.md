@@ -26,7 +26,8 @@ Mini ERP + CRM Operations Portal for a wholesale/distribution company. Node.js/E
 
 - Frontend: `https://mini-erp-crm-portal.vercel.app`
 - Backend API: `https://mini-erp-api.onrender.com/api/v1`
-- Repo: `https://github.com/user/mini-erp-crm-portal`
+- Repo: `https://github.com/Spectre-0-1-0/Project-Mini-ERP-CRM-OperationsPortal`
+- Final Commit Hash: `6a070ac6d0d4351d8535f02b5ee2b17946a71ebe`
 
 ## 4. Test credentials
 
