@@ -10,7 +10,7 @@ import { errorHandler } from './middleware/error.middleware.js';
 
 export const app = express();
 
-app.use(cors({ origin: env.CORS_ORIGIN, credentials: true }));
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 
 // Health Check Endpoint
