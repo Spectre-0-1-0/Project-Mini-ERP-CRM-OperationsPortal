@@ -269,7 +269,7 @@ function createInMemoryPrisma(): any {
           }
         }
 
-        const res = { ...newCh };
+        const res: any = { ...newCh };
         if (include?.customer) res.customer = customers.find((c) => c.id === data.customerId) || null;
         if (include?.items) res.items = challanItems.filter((ci) => ci.challanId === chId);
         return res;
@@ -278,7 +278,7 @@ function createInMemoryPrisma(): any {
         const idx = salesChallans.findIndex((ch) => ch.id === where.id);
         if (idx === -1) throw new Error('Sales Challan not found');
         salesChallans[idx] = { ...salesChallans[idx], ...data, updatedAt: new Date() };
-        const res = { ...salesChallans[idx] };
+        const res: any = { ...salesChallans[idx] };
         if (include?.customer) res.customer = customers.find((c) => c.id === res.customerId) || null;
         if (include?.items) res.items = challanItems.filter((ci) => ci.challanId === res.id);
         return res;
@@ -307,7 +307,7 @@ function createInMemoryPrisma(): any {
     $transaction: async (fn: any) => {
       // Execute transactions under a sequential mutex lock to guarantee atomic concurrency behavior
       let release: any;
-      const nextLock = new Promise((resolve) => {
+      const nextLock = new Promise<void>((resolve) => {
         release = resolve;
       });
       const currentLock = lockPromise;

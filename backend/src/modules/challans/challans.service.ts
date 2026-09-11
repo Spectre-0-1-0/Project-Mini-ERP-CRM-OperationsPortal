@@ -105,7 +105,7 @@ export const getChallanById = async (id: string) => {
 };
 
 export const createChallan = async (data: CreateChallanInput, userId: string) => {
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: any) => {
     const customer = await tx.customer.findUnique({ where: { id: data.customerId } });
     if (!customer) {
       throw new AppError(404, `Customer with ID '${data.customerId}' not found`);
@@ -169,7 +169,7 @@ export const updateChallan = async (id: string, data: UpdateChallanInput) => {
     );
   }
 
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: any) => {
     if (data.customerId) {
       const customer = await tx.customer.findUnique({ where: { id: data.customerId } });
       if (!customer) {
@@ -225,7 +225,7 @@ export const updateChallan = async (id: string, data: UpdateChallanInput) => {
 };
 
 export const confirmChallan = async (id: string, userId: string) => {
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: any) => {
     const challan = await tx.salesChallan.findUnique({
       where: { id },
       include: { items: true },
@@ -294,7 +294,7 @@ export const confirmChallan = async (id: string, userId: string) => {
 };
 
 export const cancelChallan = async (id: string, userId: string) => {
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: any) => {
     const challan = await tx.salesChallan.findUnique({
       where: { id },
       include: { items: true },

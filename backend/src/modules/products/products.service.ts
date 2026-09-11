@@ -30,7 +30,7 @@ export const listProducts = async (query: ProductQueryInput) => {
       const lowStockProducts = await prisma.$queryRaw<{ id: string }[]>`
         SELECT id FROM "Product" WHERE "currentStock" <= "minStock"
       `;
-      const ids = lowStockProducts.map((p) => p.id);
+      const ids = lowStockProducts.map((p: any) => p.id);
       where.id = { in: ids };
     } catch (_err) {
       // Fallback in case raw query fails during mock testing
@@ -99,7 +99,7 @@ export const createProduct = async (data: CreateProductInput, userId: string) =>
 
   const initialStock = data.initialStock ?? 0;
 
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: any) => {
     const product = await tx.product.create({
       data: {
         name: data.name,
@@ -159,7 +159,7 @@ export const recordStockMovement = async (
   input: CreateStockMovementInput,
   userId: string
 ) => {
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: any) => {
     const product = await tx.product.findUnique({
       where: { id: productId },
     });
