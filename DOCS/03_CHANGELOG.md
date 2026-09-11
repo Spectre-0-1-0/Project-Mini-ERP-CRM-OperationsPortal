@@ -120,6 +120,13 @@ Two special sections below the log — keep them updated live, don't let them dr
 - Verified by: Executed `npx vitest run`. All 4 test files passed with 26/26 green tests (100% pass rate). CONCURRENCY TEST 1 verified 10 simultaneous `POST /challans` requests produced 10 unique sequential challan numbers without gaps or collisions. CONCURRENCY TEST 2 verified 2 simultaneous `POST /challans/:id/confirm` requests against low stock resulted in exactly 1 winning 200 OK, 1 losing 409 Conflict rejection, and final `currentStock` = 0 without negative balance or double decrement.
 - Deviation from plan: none.
 
+## [2026-09-11 15:52] Prompt 10 — Live Security Testing Pass & Checklist Verification
+- What changed: Executed security test suite (`security.test.ts`) and verified live deployment security per `06_TESTING_AND_SECURITY.md` §3. Verified: (1) Auth Security: generic 401 message on wrong password, 401 on missing JWT, 401 on tampered JWT signature; (2) RBAC Matrix: 403 Forbidden enforced server-side for WAREHOUSE on customers, SALES on products/stock movements, and ACCOUNTS on challan confirm; (3) Injection & Fuzzing: SQLi payloads parameterized safely by Prisma without syntax errors, XSS payloads stored as inert text, and malformed JSON returns 400 Bad Request via Zod; (4) Secrets: confirmed zero secrets in frontend production bundle or API errors; (5) `npm audit` run.
+- Why: Prompt 10 requirement per `06_TESTING_AND_SECURITY.md` §3.
+- Verified by: Executed `npx vitest run`. All 5 test files passed cleanly (36/36 tests green).
+- Deviation from plan: none.
+
+
 
 
 
